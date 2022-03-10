@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . "/../vendor/autoload.php";
 it('afm is Valid - 1', function () {
     expect(\Kgalanos\CheckAfm\CheckAfm::checkAfm('011111111')->isValid())->toBeTrue();
