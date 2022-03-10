@@ -1,41 +1,41 @@
-# :package_description
+# This is my package check-afm
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![Tests](https://github.com/:vendor_slug/:package_slug/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/:vendor_slug/:package_slug/actions/workflows/run-tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
----
-This package can be used as to scaffold a framework agnostic package. Follow these steps to get started:
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/kgalanos/check-afm.svg?style=flat-square)](https://packagist.org/packages/kgalanos/check-afm)
+[![Tests](https://github.com/kgalanos/check-afm/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/kgalanos/check-afm/actions/workflows/run-tests.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/kgalanos/check-afm.svg?style=flat-square)](https://packagist.org/packages/kgalanos/check-afm)
+Έλεγχος ορθότητας Ελληνικού Αριθμού Φορολογικού Μητρώου Α.Φ.Μ.
+Είναι εμπευσμένο απο το άρθρο
+https://tatief.wordpress.com/2008/12/29/%CE%B1%CE%BB%CE%B3%CF%8C%CF%81%CE%B9%CE%B8%CE%BC%CE%BF%CF%82-%CF%84%CE%BF%CF%85-%CE%B1%CF%86%CE%BC-%CE%AD%CE%BB%CE%B5%CE%B3%CF%87%CE%BF%CF%82-%CE%BF%CF%81%CE%B8%CF%8C%CF%84%CE%B7%CF%84%CE%B1%CF%82/
 
-1. Press the "Use template" button at the top of this repo to create a new repo with the contents of this skeleton
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-<!--/delete-->
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
+Ο αλγόριθμος είναι ο εξής:
 
-## Support us
+Από τον 9ψήφιο αριθμό που θέλουμε να ελέγξουμε, απομονώνουμε το τελευταίο ψηφίο. Αυτό είναι το ψηφίο ελέγχου που θα πρέπει να συμπίπτει με τον μονοψήφιο αριθμό που θα βρούμε παρακάτω.
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
+Παίρνουμε τώρα ένα – ένα τα υπόλοιπα ψηφία του αριθμού, ξεκινώντας από το δεξιότερο, πολλαπλασιάζοντας το με μια δύναμη του 2, όση είναι και η θέση του ψηφίου σε αυτόν τον αριθμό. Δηλαδή για το πρώτο δεξιά με 2^1, το δεύτερο με 2^2, το τρίτο δεξιά 2^3 κοκ. Τα μερικά αυτά γινόμενα τα προσθέτουμε και έχουμε το άθροισμά τους. Αυτού του αθροίσματος παίρνουμε το υπόλοιπο της διαίρεσης με το 11 και αυτού του υπολοίπου το υπόλοιπο με το 10. Ο τελικός αυτός αριθμός πρέπει να είναι ίσος  με το ψηφίο του ΑΦΜ που απομονώσαμε.
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
+Παράδειγμα για το ΑΦΜ 011111111 (είναι το ευκολότερο σε πράξεις). Απομονώνουμε το τελευταίο ψηφίο ( το 1 δηλαδή), για τον υπόλοιπο αριθμό 01111111 εφαρμόζουμε τα παραπάνω που είπαμε και έχουμε
 
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+1&#42;2^1+1&#42;2^2+1&#42;2^3+1&#42;2^4+1&#42;2^5+1&#42;2^6+1&#42;2^7+0&#42;2^8
+
+=2+4+8+16+32+64+128+0=254
+
+Το υπόλοιπο αυτού του αριθμού με το 11 είναι 1 και αυτού το υπόλοιπο με το 10 είναι πάλι 1
+
+Το ΑΦΜ λοιπόν είναι σωστό γιατί το τελευταίο ψηφίο που απομονώσαμε είναι ίσο με το παραπάνω υπόλοιπο
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
+composer require kgalanos/check-afm
 ```
 
 ## Usage
 
 ```php
-$skeleton = new VendorName\Skeleton();
-echo $skeleton->echoPhrase('Hello, VendorName!');
+$skeleton = new Kgalanos\CheckAfm();
+echo $skeleton->isValid('011111111');
 ```
 
 ## Testing
@@ -58,7 +58,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Kosta Galanos](https://github.com/kgalanos)
 - [All Contributors](../../contributors)
 
 ## License
